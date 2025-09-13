@@ -1,0 +1,78 @@
+@startuml
+
+title Diagrama de Clases Ejercicio Gimnasio
+
+abstract class Persona{
+    - string nombre
+
+    + gettersSetters()
+}
+
+abstract class Socio extends Persona{
+    - id: number
+    - nombre : string
+    - PlanEntrenamiento : planDeEntrenamiento
+    - pagaMensual : number
+    - boolean cuotaAlDia
+
+    + gettersSetters()
+}
+
+class SocioRegular extends Socio{
+    - cantClasesInscriptas : number
+}
+
+class SocioVIP extends Socio
+
+class PlanEntrenamiento{
+    - descripcion : string
+}
+
+Socio *-- PlanEntrenamiento
+
+class Entrenador extends Persona{
+    - string nombre
+    - string especialidad
+
+    + asignarPlanASocio()
+}
+
+class ClaseGrupal{
+    - string nombre
+    - number horario
+    - Entrenador entrenador
+    - number capacidadMax
+    - Array<Socio> sociosInscriptos
+
+    + gettersSetters()
+}
+
+ClaseGrupal *-- Entrenador  
+Gimnasio *-- ClaseGrupal
+Gimnasio *-- Socio
+Gimnasio *-- Entrenador
+
+class Gimnasio{
+    - Array<Socio> socios
+    - Array<Entrenador> entrenadores
+    - Array<ClaseGrupal>
+
+    + agregarSocio()
+    + eliminarSocio()
+    + agregarEntrenador()
+    + eliminarEntrenador()
+    + inscribirSocioEnClase()
+    + asignarEntrenadorASocio()
+    + calcularTotalIngresosMensuales()
+    + calcularCuotaDeSocio()
+}
+
+note left of Gimnasio::inscribirSocioEnClase
+  Dentro de este metodo llamamos al 
+  setCantClasesInscriptas del socio 
+  regular para sumarle la cantidad
+end note
+
+'Relacion de Gimnasio con el resto?? Composicion??'
+
+@enduml
